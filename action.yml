@@ -1,0 +1,38 @@
+name: deploy subgraph to the graph
+inputs:
+  deploy_key:
+    description: "Your deploy key for the subgraph studio"
+    required: true
+  version_label:
+    description: "Your version label for subgraph studio"
+    required: true
+  subgraph_name:
+    description: "The name of the subgraph"
+    required: true
+  account:
+    description: "The account or organization that the subgraph is owned by"
+    required: true
+  config_file:
+    description: "The config file you will use to deploy"
+    required: false
+    default: subgraph.yml
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+      with:
+        version: "9.13.2"
+        run_install: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - name: setup graph
+      run: |
+        pnpm install --frozen-lockfile
+        pnpm run codegen
+        pnpm run build
+        pnpm run publish:thegraph \
+          ${{inputs.subgraph_name}} \
+          --version-label ${{ inputs.version_label }} \
+          --deploy-key ${{ inputs.deploy_key }}
