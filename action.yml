@@ -11,7 +11,7 @@ inputs:
     required: true
   network:
     description: "Select the network in network config file"
-    required: true
+    required: false
   # account:
   #   description: "The account or organization that the subgraph is owned by"
   #   required: true
@@ -38,10 +38,8 @@ runs:
           ${{inputs.config_file}}
         pnpm run build \
           ${{inputs.config_file}} \
-          --network ${{ inputs.network }}
         pnpm run publish:thegraph \
           ${{inputs.subgraph_name}} \
           ${{inputs.config_file}} \
-          --network ${{ inputs.network }} \
           --version-label ${{ inputs.version_label }} \
           --deploy-key ${{ inputs.deploy_key }}
