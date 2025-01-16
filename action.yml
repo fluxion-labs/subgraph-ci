@@ -9,9 +9,12 @@ inputs:
   subgraph_name:
     description: "The name of the subgraph"
     required: true
-  account:
-    description: "The account or organization that the subgraph is owned by"
+  network:
+    description: "Select the network in network config file"
     required: true
+  # account:
+  #   description: "The account or organization that the subgraph is owned by"
+  #   required: true
   config_file:
     description: "The config file you will use to deploy"
     required: false
@@ -31,8 +34,12 @@ runs:
       run: |
         pnpm install --frozen-lockfile
         pnpm run codegen
-        pnpm run build
+        pnpm run build \
+          ${{inputs.config_file}} \
+          --network ${{ inputs.network }}
         pnpm run publish:thegraph \
           ${{inputs.subgraph_name}} \
+          ${{inputs.config_file}} \
+          --network ${{ inputs.network }} \
           --version-label ${{ inputs.version_label }} \
           --deploy-key ${{ inputs.deploy_key }}
