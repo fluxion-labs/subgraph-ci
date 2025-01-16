@@ -37,7 +37,7 @@ runs:
         pnpm run codegen \
           ${{inputs.config_file}}
         pnpm run build \
-          ${{inputs.config_file}} \
+          ${{inputs.config_file}}
         pnpm run publish:thegraph \
           ${{inputs.subgraph_name}} \
           ${{inputs.config_file}} \
