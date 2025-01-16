@@ -31,6 +31,7 @@ runs:
       with:
         node-version: 22
     - name: setup graph
+      shell: bash
       run: |
         pnpm install --frozen-lockfile
         pnpm run codegen
