@@ -1,4 +1,5 @@
-name: deploy subgraph to the graph
+name: deploy subgraph
+description: deploy subgraph to subgraph hosting service
 inputs:
   deploy_key:
     description: "Your deploy key for the subgraph studio"
@@ -12,13 +13,22 @@ inputs:
   network:
     description: "Select the network in network config file"
     required: false
-  # account:
-  #   description: "The account or organization that the subgraph is owned by"
-  #   required: true
+  network-file:
+    description: "Select the network file path"
+    required: false
+    default: "networks.yml"
+  node:
+    description: "Select the network in network config file"
+    required: false
+    default: "https://api.studio.thegraph.com/deploy/"
+  ipfs:
+    description: "Select the network in network config file"
+    required: false
+    default: "https://api.thegraph.com/ipfs/api/v0"
   config_file:
     description: "The config file you will use to deploy"
     required: false
-    default: subgraph.yml
+    default: "subgraph.yml"
 runs:
   using: "composite"
   steps:
@@ -42,4 +52,7 @@ runs:
           ${{inputs.subgraph_name}} \
           ${{inputs.config_file}} \
           --version-label ${{ inputs.version_label }} \
-          --deploy-key ${{ inputs.deploy_key }}
+          --deploy-key ${{ inputs.deploy_key }} \
+          --network ${{ inputs.network }} \
+          --node ${{ inputs.nodes }} \
+          --ipfs ${{ inputs.ipfs }}
