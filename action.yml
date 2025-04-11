@@ -13,7 +13,7 @@ inputs:
   network:
     description: "Select the network in network config file"
     required: false
-  network-file:
+  network_file:
     description: "Select the network file path"
     required: false
     default: "networks.json"
@@ -54,6 +54,6 @@ runs:
           --version-label ${{ inputs.version_label }} \
           --deploy-key ${{ inputs.deploy_key }} \
           --network ${{ inputs.network }} \
-          --network-file ${{ inputs.network-file }} \
+          --network-file ${{ inputs.network_file }} \
           --node ${{ inputs.node }} \
           --ipfs ${{ inputs.ipfs }}
